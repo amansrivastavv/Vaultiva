@@ -1,0 +1,136 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300;
+    font-family: Inter, system-ui, -apple-system, sans-serif;
+  }
+}
+
+@layer components {
+  .navbar {
+    @apply bg-white dark:bg-gray-800 shadow-md;
+  }
+  
+  .chat-container {
+    @apply flex-1 h-[calc(100vh-64px)] mt-4;
+  }
+  
+  .chat-sidebar {
+    @apply w-64 border-r border-gray-200 dark:border-gray-700;
+  }
+  
+  .chat-main {
+    @apply flex-1 flex flex-col;
+  }
+  
+  .messages-list {
+    @apply flex-1 overflow-y-auto p-4;
+  }
+  
+  .message-input {
+    @apply p-4 border-t border-gray-200 dark:border-gray-700;
+  }
+  
+  .message {
+    @apply max-w-[70%] rounded-lg px-4 py-3;
+  }
+  
+  .message.sent {
+    @apply bg-primary text-white;
+  }
+  
+  .message.received {
+    @apply bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-200;
+  }
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.chat-container {
+  display: flex;
+  flex: 1;
+  height: calc(100vh - 64px);
+  margin-top: 1rem;
+}
+
+.chat-sidebar {
+  width: 250px;
+  border-right: 1px solid var(--border-light);
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.chat-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.message-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.message-input {
+  padding: 1rem;
+  border-top: 1px solid var(--border-light);
+}
+
+.message {
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  max-width: 70%;
+}
+
+.message.sent {
+  background-color: var(--primary-color);
+  color: white;
+  margin-left: auto;
+}
+
+.message.received {
+  background-color: #e2e8f0;
+  color: var(--text-light);
+}
+
+/* Dark theme variations */
+[data-theme="dark"] {
+  background-color: var(--background-dark);
+  color: var(--text-dark);
+}
+
+[data-theme="dark"] .chat-sidebar {
+  border-right-color: var(--border-dark);
+}
+
+[data-theme="dark"] .chat-main {
+  border-left-color: var(--border-dark);
+}
+
+[data-theme="dark"] .message-input {
+  border-top-color: var(--border-dark);
+}
+
+[data-theme="dark"] .message-list {
+  background-color: var(--background-dark);
+}
+
+[data-theme="dark"] .message.received {
+  background-color: #374151;
+  color: var(--text-dark);
+}
