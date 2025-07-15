@@ -29,7 +29,7 @@ const modes = [
 
 const ChatModes = () => {
   return (
-      <div className="min-h-screen bg-gray-950 text-white px-6 py-16 pt-28 md:pt-24 lg:pt-20 sm:pt-30">
+      <div className="min-h-screen bg-gray-950 text-white px-6 py-16 pt-28 md:pt-26 lg:pt-24 sm:pt-30">
 
       <h2 className="text-center text-4xl md:text-5xl font-extrabold mb-16 text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-pink-500">
         Select Chat Mode

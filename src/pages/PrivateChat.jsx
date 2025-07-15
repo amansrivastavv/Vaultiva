@@ -3,31 +3,36 @@ import { useChat } from "../context/ChatContext";
 import { createRoom, joinRoom } from "../utils/api";
 import ChatBox from "../components/ChatBox";
 import MessageInput from "../components/MessageInput";
-import QRJoin from "../components/QRJoin";
 import { motion } from "framer-motion";
-import { Button } from "../components/Button";
-import { Card, CardContent } from "../components/Card";
+import toast, { Toaster } from "react-hot-toast";
+import CreateRoom from "../components/CreateRoom";
+import JoinRoom from "../components/JoinRoom";
+import { Button } from "../components/ui/button";
 
 const PrivateChat = () => {
   const { activeRoom, setActiveRoom } = useChat();
   const [error, setError] = useState(null);
+  const [joinId, setJoinId] = useState("");
 
   const handleCreateRoom = async () => {
     try {
       setError(null);
       const room = await createRoom("private");
-      if (room) {
+      if (room && room.roomId) {
         setActiveRoom(room.roomId);
+      } else {
+        throw new Error("Invalid room response");
       }
     } catch (error) {
       console.error("Error creating room:", error);
-      setError(error.message);
+      setError(error.message || "Failed to create room");
     }
   };
 
-  const handleJoinRoom = async (roomId) => {
+  const handleJoinRoom = async () => {
     try {
-      const room = await joinRoom(roomId);
+      setError(null);
+      const room = await joinRoom(joinId);
       if (room) {
         setActiveRoom(room.roomId);
       }
@@ -39,6 +44,7 @@ const PrivateChat = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black flex flex-col pt-20 px-4 py-10">
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="relative z-10 max-w-5xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: -30 }}
@@ -62,43 +68,8 @@ const PrivateChat = () => {
             transition={{ duration: 0.6 }}
             className="grid grid-cols-1 md:grid-cols-2 gap-8"
           >
-            {/* Create Room Card */}
-            <motion.div
-              whileHover={{ scale: 1.05, rotate: 0.5 }}
-              whileTap={{ scale: 0.98 }}
-              className="group bg-gradient-to-br from-indigo-900 via-purple-900 to-gray-900 rounded-2xl border border-indigo-500/30 shadow-2xl p-[2px]"
-            >
-              <div className="bg-gray-900 rounded-[inherit] p-6 h-full text-center transition-all duration-500 group-hover:bg-black/60">
-                <h3 className="text-2xl font-bold mb-4 text-indigo-300">🚀 Create a New Room</h3>
-                <button
-                  onClick={handleCreateRoom}
-                  className="relative inline-flex items-center justify-center px-8 py-3 text-lg font-semibold text-white rounded-xl transition-all duration-300 group bg-indigo-600 hover:bg-indigo-700 shadow-xl overflow-hidden"
-                >
-                  <span className="absolute inset-0 w-full h-full bg-gradient-to-br from-purple-600 via-indigo-500 to-blue-600 opacity-0 group-hover:opacity-100 blur-md transition duration-500 rounded-xl"></span>
-                  <span className="relative z-10 flex items-center gap-2">
-                    🚀 <span>Create Room</span>
-                  </span>
-                </button>
-              </div>
-            </motion.div>
-
-            {/* Join Room Card */}
-            <motion.div
-              whileHover={{ scale: 1.05, rotate: -0.5 }}
-              whileTap={{ scale: 0.98 }}
-              className="group bg-gradient-to-br from-pink-800 via-purple-800 to-gray-900 rounded-2xl border border-pink-500/30 shadow-2xl p-[2px]"
-            >
-              <div className="bg-gray-900 rounded-[inherit] p-6 h-full text-center transition-all duration-500 group-hover:bg-black/60">
-                <h3 className="text-2xl font-bold mb-4 text-pink-300">🔑 Join an Existing Room</h3>
-                <button
-                  onClick={() => handleJoinRoom("room123")}
-                  className="relative inline-flex items-center justify-center px-6 py-3 font-semibold text-white bg-pink-600 rounded-xl shadow-md hover:bg-pink-500 transition-all duration-300 overflow-hidden"
-                >
-                  <span className="z-10">Join Room</span>
-                  <span className="absolute inset-0 bg-pink-400 opacity-0 group-hover:opacity-20 rounded-xl transition-all duration-300 blur-xl"></span>
-                </button>
-              </div>
-            </motion.div>
+            <CreateRoom handleCreateRoom={handleCreateRoom} />
+            <JoinRoom handleJoinRoom={handleJoinRoom} />
           </motion.div>
         ) : (
           <motion.div

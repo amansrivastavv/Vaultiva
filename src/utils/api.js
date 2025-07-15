@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:3001/api';
+const API_BASE_URL = 'http://localhost:3001';
 
 export const fetchRooms = async () => {
   try {
@@ -21,25 +21,25 @@ export const fetchRooms = async () => {
 
 export const createRoom = async (type) => {
   try {
+    console.log('Creating room with type:', type);
     const response = await fetch(`${API_BASE_URL}/rooms/create`, {
       method: 'POST',
-      credentials: 'include',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ 
-        type,
-        passcode: type === 'private' ? Math.random().toString(36).substring(2, 15) : null,
-        isAnonymous: type === 'anonymous'
+        type
       })
     });
     
     if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(errorText || 'Failed to create room');
+      const error = await response.json();
+      throw new Error(error.message || 'Failed to create room');
     }
     
-    return await response.json();
+    const data = await response.json();
+    console.log('Room created:', data);
+    return data;
   } catch (error) {
     console.error('Error creating room:', error);
     throw error;
