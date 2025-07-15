@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext } from 'react';
-import io from 'socket.io-client';
+import { SocketContext } from './SocketContext';
 
 const ChatContext = createContext();
 
@@ -7,33 +7,41 @@ export const ChatProvider = ({ children }) => {
   const [messages, setMessages] = useState([]);
   const [typingUsers, setTypingUsers] = useState([]);
   const [activeRoom, setActiveRoom] = useState(null);
-  const [socket, setSocket] = useState(null);
+  const socket = useContext(SocketContext);
 
   React.useEffect(() => {
-    connectSocket();
-    return () => {
-      if (socket) {
-        socket.disconnect();
-      }
-    };
-  }, []);
+    if (!socket) return;
 
-  const connectSocket = () => {
-    const newSocket = io('http://localhost:5000');
-    setSocket(newSocket);
-
-    newSocket.on('connect', () => {
+    socket.on('connect', () => {
       console.log('Connected to server');
     });
 
-    newSocket.on('message', (msg) => {
+    socket.on('message', (msg) => {
       setMessages(prev => [...prev, msg]);
     });
 
-    newSocket.on('typing', (users) => {
-      setTypingUsers(users);
+    socket.on('typing', (user) => {
+      setTypingUsers(prev => [...prev, user]);
     });
-  };
+
+    socket.on('stop-typing', (user) => {
+      setTypingUsers(prev => prev.filter(u => u !== user));
+    });
+
+    socket.on('disconnect', () => {
+      console.log('Disconnected from server');
+    });
+
+    return () => {
+      if (socket) {
+        socket.off('connect');
+        socket.off('message');
+        socket.off('typing');
+        socket.off('stop-typing');
+        socket.off('disconnect');
+      }
+    };
+  }, [socket]);
 
   const sendMessage = (message, type = 'text') => {
     if (!socket) return;
@@ -57,7 +65,6 @@ export const ChatProvider = ({ children }) => {
         typingUsers,
         activeRoom,
         socket,
-        connectSocket,
         sendMessage,
         startTyping,
         stopTyping,
