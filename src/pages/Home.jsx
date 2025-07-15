@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const Home = () => {
   return (
-    <div className="relative min-h-screen bg-gray-950 text-white px-4 py-16 overflow-hidden mt-6">
+    <div className="relative min-h-screen bg-gray-950 text-white px-4 py-16 overflow-hidden pt-20">
       {/* Blurred Background Blobs */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute w-[500px] h-[500px] bg-purple-600 opacity-30 blur-3xl top-[-150px] left-[-150px] rounded-full animate-pulse"></div>
