@@ -38,7 +38,7 @@ const PrivateChat = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black flex flex-col mt-16 px-4 py-10">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black flex flex-col pt-20 px-4 py-10">
       <div className="relative z-10 max-w-5xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: -30 }}

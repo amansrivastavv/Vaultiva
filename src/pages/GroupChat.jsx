@@ -9,7 +9,7 @@ const GroupChat = () => {
   const [error, setError] = useState(null);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black p-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black p-4 pt-20">
       <div className="max-w-5xl mx-auto">
         <h1 className="text-3xl font-bold text-white mb-8">👥 Group Chat</h1>
 
