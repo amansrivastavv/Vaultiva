@@ -9,6 +9,15 @@ export const ChatProvider = ({ children }) => {
   const [activeRoom, setActiveRoom] = useState(null);
   const [socket, setSocket] = useState(null);
 
+  React.useEffect(() => {
+    connectSocket();
+    return () => {
+      if (socket) {
+        socket.disconnect();
+      }
+    };
+  }, []);
+
   const connectSocket = () => {
     const newSocket = io('http://localhost:5000');
     setSocket(newSocket);

@@ -4,7 +4,7 @@ import MessageInput from '../components/MessageInput';
 import { useChat } from '../context/ChatContext';
 
 const AnonymousChat = () => {
-  const { activeRoom } = useChat();
+  const { activeRoom, setActiveRoom, socket } = useChat();
 
   return (
     <div className="anonymous-chat">
@@ -12,7 +12,10 @@ const AnonymousChat = () => {
       {!activeRoom ? (
         <div className="join-section">
           <button onClick={() => {
-            // Logic to join anonymous chat
+            if (socket) {
+              setActiveRoom('anonymous');
+              socket.emit('joinRoom', { room: 'anonymous' });
+            }
           }}>
             Join Anonymous Chat
           </button>

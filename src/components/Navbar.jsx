@@ -24,7 +24,7 @@ const Navbar = () => {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: 'easeOut' }}
-      className="bg-gray-950 shadow-lg backdrop-blur-md bg-opacity-80 border-b border-white/10 z-50 fixed top-0 w-full"
+      className="bg-gray-950 shadow-lg backdrop-blur-md bg-opacity-80 border-b border-white/10 z-50 fixed top-0 w-full mb-8"
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         <Link to="/" className="text-3xl font-extrabold bg-gradient-to-r from-indigo-400 via-pink-500 to-purple-500 bg-clip-text text-transparent">
