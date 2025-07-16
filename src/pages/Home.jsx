@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { HoverBorderGradient } from "../components/ui/hover-border-gradient";
+
 
 const Home = () => {
   return (
@@ -39,9 +41,18 @@ const Home = () => {
           transition={{ delay: 0.5, duration: 0.6 }}
           className="space-y-3 text-gray-300 text-base md:text-lg"
         >
-          <p>🔐 <strong>End-to-End Encrypted:</strong> Messages are fully encrypted. Not even Vaultiva can read them.</p>
-          <p>🕵️ <strong>Truly Private:</strong> No signups, no tracking, no history.</p>
-          <p>🧨 <strong>Self-Destructing Rooms:</strong> Anonymous chats vanish when you leave. Group chats expire in 24h.</p>
+          <p>
+            🔐 <strong>End-to-End Encrypted:</strong> Messages are fully
+            encrypted. Not even Vaultiva can read them.
+          </p>
+          <p>
+            🕵️ <strong>Truly Private:</strong> No signups, no tracking, no
+            history.
+          </p>
+          <p>
+            🧨 <strong>Self-Destructing Rooms:</strong> Anonymous chats vanish
+            when you leave. Group chats expire in 24h.
+          </p>
         </motion.div>
 
         {/* CTA Buttons */}
@@ -51,11 +62,14 @@ const Home = () => {
           transition={{ delay: 0.6, duration: 0.6 }}
           className="space-y-5"
         >
-          <Link
-            to="/chat-modes"
-            className="inline-block bg-indigo-600 hover:bg-indigo-500 px-8 py-4 rounded-xl text-lg font-semibold transition duration-300"
-          >
-            Get Started
+          <Link to="/chat-modes">
+            <HoverBorderGradient
+              containerClassName="rounded-full"
+              as="div"
+              className="text-white text-lg font-semibold px-8 py-3"
+            >
+              Get Started
+            </HoverBorderGradient>
           </Link>
 
           <div className="flex justify-center gap-4">
